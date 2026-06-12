@@ -571,37 +571,37 @@ var PROFORMAS = [
   { name: "Alcohol Advice", tab: "ER", section: "PILs", color: "orange", url: "https://em3learn.github.io/proformas/assess-pils/advice-and-support-if-you-are-drinking-too-much-alcohol.pdf" },
   { name: "Alcohol Advice - Gujarati", tab: "ER", section: "PILs", color: "orange", url: "https://em3learn.github.io/proformas/assess-pils/alcohol-advice-gujarati.pdf" },
   { name: "Asthma Flare Up", tab: "ER", section: "PILs", color: "blue", url: "https://em3learn.github.io/proformas/assess-pils/monitoring-your-asthma-after-a-flare-up.pdf" },
-//BBV Routine Screening
-//Blood Clots
-//Blood transfusion
-//BRUE
-//Chest Drain
-//Child Protection
-//Clavicle Fracture
-  { name: "Delirium", tab: "ER", section: "PILs", color: "green", url: "https://em3learn.github.io/proformas/assess-pils/understanding-delirium.pdf" },
-//Dementia
-//Epistaxis
+  { name: "BBV Routine Screening", tab: "ER", section: "PILs", color: "lime", url: "https://em3learn.github.io/proformas/assess-pils/bbv-routine-screening.pdf" },
+  { name: "Blood Clots - Reducing risk when going home", tab: "ER", section: "PILs", color: "red", url: "https://em3learn.github.io/proformas/blood-clots.pdf" },
+  { name: "Blood Transfusion", tab: "ER", section: "PILs", color: "red", url: "https://em3learn.github.io/proformas/assess-pils/blood-transfusion.pdf" },
+  { name: "BRUE", tab: "ER", section: "PILs", color: "black", url: "https://em3learn.github.io/proformas/assess-pils/brue.pdf" },
+  { name: "Chest Drain", tab: "ER", section: "PILs", color: "sky", url: "https://em3learn.github.io/proformas/assess-pils/chest-drain.pdf" },
+  { name: "Child Protection Services", tab: "ER", section: "PILs", color: "purple", url: "https://em3learn.github.io/proformas/assess-pils/25mg-nicotine-patch.pdf" },
+  { name: "Clavicle Fracture", tab: "ER", section: "PILs", color: "slate", url: "https://em3learn.github.io/proformas/assess-pils/clavicle-fracture.pdf" },
+  { name: "Delirium", tab: "ER", section: "PILs", color: "sky", url: "https://em3learn.github.io/proformas/assess-pils/understanding-delirium.pdf" },
+  { name: "Dementia", tab: "ER", section: "PILs", color: "green", url: "https://em3learn.github.io/proformas/assess-pils/dementia.pdf" },
+  { name: "Epistaxis", tab: "ER", section: "PILs", color: "orange", url: "https://em3learn.github.io/proformas/assess-pils/epistaxis.pdf" },
   { name: "Five Ways To Wellbeing", tab: "ER", section: "PILs", color: "magenta", url: "https://em3learn.github.io/proformas/assess-pils/five-ways-to-wellbeing.pdf" },
-//Fluuro-quinolone
+  { name: "Fluoro-quinolone MHRA Fact Sheet", tab: "ER", section: "PILs", color: "lime", url: "https://em3learn.github.io/proformas/assess-pils/fluoroquinolone-patient-fact-sheet.pdf" },
   { name: "Head Injury (Minor)", tab: "ER", section: "PILs", color: "red", url: "https://em3learn.github.io/proformas/assess-pils/care-after-a-minor-head-injury.pdf" },
-//Hypoglycaemia
-//Major Trauma Transfer
+  { name: "Hypoglycaemia in Diabetics", tab: "ER", section: "PILs", color: "green", url: "https://em3learn.github.io/proformas/assess-pils/hypoglycaemia.pdf" },
+  { name: "Major Trauma Transfer", tab: "ER", section: "PILs", color: "sky", url: "https://em3learn.github.io/proformas/assess-pils/major-trauma-transfer.pdf" },
   { name: "Mental Health Support", tab: "ER", section: "PILs", color: "light-blue", url: "https://em3learn.github.io/proformas/assess-pils/mental-health-support.pdf" },
   { name: "Neck Sprain", tab: "ER", section: "PILs", color: "red", url: "https://em3learn.github.io/proformas/assess-pils/neck-pain.pdf" },
   { name: "Nicotine Inhaler", tab: "ER", section: "PILs", color: "grey", url: "https://em3learn.github.io/proformas/assess-pils/nicotine-inhaler.pdf" },
   { name: "Nicotine Lozenges", tab: "ER", section: "PILs", color: "grey", url: "https://em3learn.github.io/proformas/assess-pils/nicotine-lozenges.pdf" },
-//NIV
-//Palliative care team
-  { name: "Patient Information and Liaison Service (PILS)", tab: "ER", section: "PILs", color: "light-blue", url: "https://em3learn.github.io/proformas/assess-pils/PALS.pdf" },
-//Procedural sedation
-//Prothrombin
+  { name: "NIV", tab: "ER", section: "PILs", color: "sky", url: "https://em3learn.github.io/proformas/assess-pils/NIV.pdf" },
+  { name: "Palliative Care Team", tab: "ER", section: "PILs", color: "pink", url: "https://em3learn.github.io/proformas/assess-pils/palliative-care-team.pdf" },
+  { name: "Patient Information and Liaison Service (PILS)", tab: "ER", section: "PILs", color: "indigo", url: "https://em3learn.github.io/proformas/assess-pils/PALS.pdf" },
+  { name: "Procedural Sedation", tab: "ER", section: "PILs", color: "orange", url: "https://em3learn.github.io/proformas/assess-pils/procedural-sedation.pdf" },
+  { name: "Dementia", tab: "ER", section: "PILs", color: "lime", url: "https://em3learn.github.io/proformas/assess-pils/prothrombin-complex-concentrate-pcc.pdf" },
   { name: "Safeguarding Adults", tab: "ER", section: "PILs", color: "dark-blue", url: "https://em3learn.github.io/proformas/assess-pils/Safeguarding-Adults.pdf" },
-//Serratus anterior plane block (SAPB)
-//Sprains, strains, or bruises
-//Stitches and staples
+  { name: "Serratus Anterior Plane Block (SAPB)", tab: "ER", section: "PILs", color: "pink", url: "https://em3learn.github.io/proformas/assess-pils/serratus-anterior-plane-block-sapb.pdf" },
+  { name: "Sprains, Strains, or Bruises", tab: "ER", section: "PILs", color: "orange", url: "https://em3learn.github.io/proformas/assess-pils/sprains-strains-bruises.pdf" },
+  { name: "Stitches and Staples", tab: "ER", section: "PILs", color: "slate", url: "https://em3learn.github.io/proformas/assess-pils/stitches-and-staples.pdf" },
   { name: "Stop Smoking", tab: "ER", section: "PILs", color: "grey", url: "https://em3learn.github.io/proformas/assess-pils/Stop-smoking.pdf" },
-//Traumatic hospital experience aftercare
-  
+  { name: "Traumatic Hospital Experience Aftercare (Children)", tab: "ER", section: "PILs", color: "dark-purple", url: "https://em3learn.github.io/proformas/assess-pils/traumatic-hospital-experience-aftercare-children.pdf" },
+
   // ── MAJORS ───────────────────────────────────────────────────
   // { name: "Example Majors proforma",                      tab: "Majors", section: "ED Proformas",       color: "red",         url: "#" },
 
