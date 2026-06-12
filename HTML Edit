@@ -602,6 +602,60 @@ var PROFORMAS = [
   { name: "Stop Smoking", tab: "ER", section: "PILs", color: "grey", url: "https://em3learn.github.io/proformas/assess-pils/Stop-smoking.pdf" },
   { name: "Traumatic Hospital Experience Aftercare (Children)", tab: "ER", section: "PILs", color: "dark-purple", url: "https://em3learn.github.io/proformas/assess-pils/traumatic-hospital-experience-aftercare-children.pdf" },
 
+    // ── ER / Other ───────────────────────────────────────────
+  { name: "4AT Delirium Screening Tool", tab: "ER", section: "Other", color: "slate", url: "https://em3learn.github.io/proformas/assess-other/4at-delirium-screening-tool.pdf" },
+  { name: "Acute Behavioural Disturbance In Adults ED", tab: "ER", section: "Other", color: "red", url: "https://em3learn.github.io/proformas/assess-other/acute-behavioural-disturbance-in-adults-ed-proforma.pdf" },
+  { name: "Alcohol Withdrawal Management and GMAWS Chart", tab: "ER", section: "Other", color: "sky", url: "https://em3learn.github.io/proformas/assess-other/alcohol-withdrawal-and-gmaws-uhl-proforma.pdf" },
+//Aminophylline Prescription Chart (Adults)
+//ASIA Chart
+//Blocked Laryngectomy Stoma
+//Blocked Tracheostomy
+  { name: "Body Map ED Documentation Tool", tab: "ER", section: "Other", color: "green", url: "https://em3learn.github.io/proformas/assess-other/body-map-ed-documentation-tool.pdf" },
+//Burns (Adults)
+//Burns (Children)
+  { name: "Capacity Assessment In Adults", tab: "ER", section: "Other", color: "green", url: "https://em3learn.github.io/proformas/assess-other/capacity-assessment-in-adults-ed-proforma.pdf" },
+//Chest Drain Insertion Invasive Procedure Checklist
+//Child death paperwork
+  { name: "Complaint (Verbal) - Record Form", tab: "ER", section: "Other", color: "black", url: "https://em3learn.github.io/proformas/assess-other/verbal-complaints-record-form.pdf" },
+  { name: "Covid-19 Sieve (Adults)", tab: "ER", section: "Other", color: "sky", url: "https://em3learn.github.io/proformas/assess-other/covid-19-triage-proforma-adults.pdf" },
+//Critical Interventions Log
+//CVC Insertion Safety Checklist
+//Debrief Tool
+  { name: "Domestic Abuse UHL Emergency Department Guideline", tab: "ER", section: "Other", color: "red", url: "https://em3learn.github.io/proformas/assess-other/domestic-abuse-uhl-emergency-department-guideline.pdf" },
+  { name: "Gentamicin Prescription Chart", tab: "ER", section: "Other", color: "lime", url: "https://em3learn.github.io/proformas/assess-other/gentamycin-chart-adults.pdf" },
+  { name: "HAZMAT and CBRNe Pack", tab: "ER", section: "Other", color: "coral", url: "https://em3learn.github.io/proformas/assess-other/ed-hazmat-and-cbrne-pack.pdf" },
+//Heparin (UHF) Chart
+  { name: "Illicit Substances Form", tab: "ER", section: "Other", color: "coral", url: "https://em3learn.github.io/proformas/assess-other/illicit-substances-form.pdf" },
+//Intubation Invasive Procedure Safety Checklist
+//IO Access invasive procedure safety checlist & care pathway
+  { name: "Major Trauma CT Primary Survey Report Form", tab: "ER", section: "sky", color: "green", url: "https://em3learn.github.io/proformas/assess-other/major-trauma-ct-primary-survey-report-form.pdf" },
+//Major trauma secondary transfer tool
+//Massive haemorrhage protocol
+//Missing patient (adult)
+//NIV GH transfer checklist
+//NIV pack
+  { name: "Nicotine Replacement Therapy", tab: "ER", section: "Other", color: "grey", url: "https://em3learn.github.io/proformas/assess-other/nicotine-replacement-therapy-uhl-emergency-department-guideline.pdf" },
+  { name: "Opioid Withdrawal (COWS)Chart", tab: "ER", section: "Other", color: "black", url: "https://em3learn.github.io/proformas/assess-other/cows-clinical-opioid-withdrawal-scale-chart.pdf" },
+// PCC User Guideline
+  { name: "Police ED Handover Form", tab: "Assess", section: "Other", color: "red", url: "https://em3learn.github.io/proformas/assess-other/police-ed-handover-form.pdf" },
+//Procedural Sedation (Adults)
+//Procedural Sedation (Children)
+//Rib fracture bundle for LRI wards
+//RSI Covid
+//Safeguarding children medical examination pack
+//Safer surgery checklist
+  { name: "Section 136 Pack", tab: "Assess", section: "Other", color: "blue", url: "https://em3learn.github.io/proformas/assess-other/section-136-pack.pdf" },
+//Serratus anterior plane block (SAPB) record
+  { name: "Think Delirium Support Tool", tab: "Assess", section: "Other", color: "slate", url: "https://em3learn.github.io/proformas/assess-other/think-delirium-support-tool.pdf" },
+//Trauma team member notes
+//TXA prescribing aid in adult trauma
+  { name: "Urgent Care Services Map", tab: "Assess", section: "Other", color: "orange", url: "https://em3learn.github.io/proformas/assess-other/urgent-care-services-map-llr.pdf" },
+  { name: "Vancomycin Chart", tab: "Assess", section: "Other", color: "teal", url: "https://em3learn.github.io/proformas/assess-other/vancomycin-chart-v1.6.pdf" },
+//Variable rate pump infusion chart
+  { name: "VTE Risk Assessment for Patients Awaiting Bed", tab: "Assess", section: "Other", color: "red", url: "https://em3learn.github.io/proformas/assess-other/vte-risk-assessment-ed-tool-for-patients-awaiting-bed.pdf" },
+//Wayfarin chart
+  { name: "Weapons Brought In By Patients", tab: "Assess", section: "Other", color: "maroon", url: "https://em3learn.github.io/proformas/assess-other/weapons-brought-in-by-patients-–-safety-management-uhl-emergency-department-guideline.pdf" },
+
   // ── MAJORS ───────────────────────────────────────────────────
   // { name: "Example Majors proforma",                      tab: "Majors", section: "ED Proformas",       color: "red",         url: "#" },
 
