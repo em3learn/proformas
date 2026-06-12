@@ -549,16 +549,15 @@ var PROFORMAS = [
   { name: "Toxicology", tab: "ER", section: "EDU Pathways", color: "cyan", url: "https://em3learn.github.io/proformas/assess-pathways/toxicology-edu-pathway.pdf" },
 
 // ── ER / Requests & Letters ──────────────────────────────────────────────────────
-
-  
-  
+  { name: "Cardiac Investigation Referral Form", tab: "ER", section: "Requests & Letters", color: "teal", url: "https://em3learn.github.io/proformas/assess-requests/cardiac-investigation-referral-form.pdf" },
+  { name: "Critical Care Decision Form (Adults)", tab: "ER", section: "Requests & Letters", color: "coral", url: "https://em3learn.github.io/proformas/assess-requests/critical-care-decision-form-adults.pdf" },
+  { name: "Critical Care Referral Form (Adults)", tab: "ER", section: "Requests & Letters", color: "black", url: "https://em3learn.github.io/proformas/assess-requests/critical-care-referral-form-adults.pdf" },
   { name: "Discharge Letter (IT Downtime)", tab: "ER", section: "Requests & Letters", color: "blue", url: "https://em3learn.github.io/proformas/assess-requests/discharge-letter-ed-it-downtime.pdf" },
   { name: "Sharing Information About Patients In Police Custody Discharge Letter", tab: "ER", section: "Requests & Letters", color: "green", url: "https://em3learn.github.io/proformas/assess-requests/sharing-information-about-patients-in-police-custody-discharge-letter.pdf" },
-
-
-
-
-  { name: "Imaging Referral Form", tab: "ER", section: "Requests & Letters", color: "magenta", url: "https://em3learn.github.io/proformas/assess-requests/imaging-referral-form.pdf" },
+  { name: "End-of-Life Drug Community Nurse Authorisation", tab: "ER", section: "Requests & Letters", color: "purple", url: "https://em3learn.github.io/proformas/assess-requests/end-of-life-drug-community-nurse-authorisation.pdf" },
+  { name: "Haematology Product Replacement Request", tab: "ER", section: "Requests & Letters", color: "orange", url: "https://em3learn.github.io/proformas/assess-requests/haematology-product-replacement-request-form.pdf" },
+  { name: "Imaging Referral Form", tab: "ER", section: "Requests & Letters", color: "green", url: "https://em3learn.github.io/proformas/assess-requests/imaging-referral-form.pdf" },
+  { name: "Physiotherapy Self-Referral", tab: "ER", section: "Requests & Letters", color: "grey", url: "https://em3learn.github.io/proformas/assess-requests/physiotherapy-self-referral-form.pdf" },
   { name: "Headed UHL Paper", tab: "ER", section: "Requests & Letters", color: "magenta", url: "https://em3learn.github.io/proformas/assess-requests/headed-uhl-paper.pdf" },
 
 // ── ER / PILs ────────────────────────────────────────────
