@@ -1,0 +1,692 @@
+<!--
+╔══════════════════════════════════════════════════════════════════╗
+║  PROFORMA SEARCH — Squarespace Code Block                       ║
+║                                                                  ║
+║  HOW TO USE IN SQUARESPACE                                       ║
+║  1. Edit your page in Squarespace                               ║
+║  2. Add an "Embed" or "Code" block                              ║
+║  3. Paste the entire contents of this file into the code block  ║
+║  4. Optional: hide the page header/nav for a cleaner look       ║
+║                                                                  ║
+║  HOW TO EDIT PROFORMAS                                          ║
+║  • Scroll to the PROFORMAS ARRAY section below                  ║
+║  • Each entry needs: name, tab, section, color, url             ║
+║  • url = full Squarespace PDF link (right-click uploaded PDF →  ║
+║    Copy Link)                                                    ║
+╚══════════════════════════════════════════════════════════════════╝
+-->
+
+<style>
+  /* All styles scoped to #pf-app to avoid Squarespace conflicts */
+  #pf-app, #pf-app * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  #pf-app {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    padding: 16px 0;
+    max-width: 1200px;
+  }
+
+  /* ── TOP TAB BUTTONS ─────────────────────────────────────── */
+  #pf-app .pf-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 12px;
+  }
+
+  #pf-app button.pf-tab {
+    padding: 9px 18px;
+    font-size: 15px;
+    font-weight: 500;
+    border: 2px dashed #b0bec5;
+    border-radius: 6px;
+    background: white;
+    color: #455a64;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  #pf-app button.pf-tab:hover {
+    border-color: #1b5e20;
+    color: #1b5e20;
+    border-style: solid;
+  }
+
+  #pf-app button.pf-tab.pf-on {
+    background: #1b5e20;
+    border: 2px solid #1b5e20;
+    color: white;
+  }
+
+  /* ── BODY LAYOUT (sidebar + main) ───────────────────────── */
+  #pf-app .pf-body {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  /* ── LEFT SIDEBAR ────────────────────────────────────────── */
+  #pf-app .pf-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 160px;
+    flex-shrink: 0;
+    background: #e3f2fd;
+    border-radius: 8px;
+    padding: 8px;
+  }
+
+  #pf-app button.pf-sec {
+    padding: 10px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1.5px solid #90caf9;
+    border-radius: 6px;
+    background: white;
+    color: #1a3c6a;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+    text-align: left;
+    line-height: 1.3;
+    width: 100%;
+  }
+
+  #pf-app button.pf-sec:hover {
+    border-color: #1565c0;
+    color: #1565c0;
+  }
+
+  #pf-app button.pf-sec.pf-on {
+    background: #1565c0;
+    border-color: #1565c0;
+    color: white;
+  }
+
+  /* ── MAIN CONTENT AREA ───────────────────────────────────── */
+  #pf-app .pf-main {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Toolbar row (toggle + heading + search) */
+  #pf-app .pf-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+
+  /* Toggle switch */
+  #pf-app .pf-tgl-wrap {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 14px;
+    color: #607d8b;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  #pf-app .pf-tgl {
+    position: relative;
+    width: 38px;
+    height: 22px;
+    flex-shrink: 0;
+  }
+
+  #pf-app .pf-tgl input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  #pf-app .pf-track {
+    position: absolute;
+    inset: 0;
+    background: #b0bec5;
+    border-radius: 22px;
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+
+  #pf-app .pf-track::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 3px;
+    left: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  }
+
+  #pf-app .pf-tgl input:checked ~ .pf-track {
+    background: #1b5e20;
+  }
+
+  #pf-app .pf-tgl input:checked ~ .pf-track::after {
+    transform: translateX(16px);
+  }
+
+  /* Section heading */
+  #pf-app .pf-heading {
+    font-size: 18px;
+    font-weight: 500;
+    color: #1a2b3c;
+    flex: 1;
+  }
+
+  /* Search input */
+  #pf-app input.pf-search {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1.5px solid #cfd8dc;
+    border-radius: 6px;
+    background: white;
+    color: #333;
+    width: 240px;
+    max-width: 100%;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  #pf-app input.pf-search:focus {
+    border-color: #1b5e20;
+    box-shadow: 0 0 0 3px rgba(27, 94, 32, 0.1);
+  }
+
+  /* ── TILE GRID ───────────────────────────────────────────── */
+  #pf-app .pf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+    gap: 9px;
+  }
+
+  #pf-app a.pf-tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 16px 12px;
+    min-height: 108px;
+    border-radius: 7px;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.12s, opacity 0.12s, box-shadow 0.12s;
+    word-break: break-word;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+  #pf-app a.pf-tile:hover {
+    opacity: 0.87;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+    text-decoration: none;
+  }
+
+  /* Light-background tiles get dark text */
+  #pf-app a.pf-tile.pf-lt {
+    color: #1a2b3c;
+    border: 1.5px solid #ccc;
+  }
+
+  #pf-app a.pf-tile.pf-lt:hover {
+    color: #1a2b3c;
+  }
+
+  /* Empty state & count */
+  #pf-app .pf-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 48px 16px;
+    color: #90a4ae;
+    font-size: 14px;
+  }
+
+  #pf-app .pf-count {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #9e9e9e;
+  }
+
+  /* Mobile: sidebar collapses to a horizontal row above the grid */
+  @media (max-width: 560px) {
+    #pf-app .pf-body {
+      flex-direction: column;
+    }
+    #pf-app .pf-sidebar {
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 100%;
+      border-radius: 6px;
+      padding: 6px;
+    }
+    #pf-app button.pf-sec {
+      width: auto;
+      flex-shrink: 0;
+      font-size: 13px;
+    }
+    #pf-app button.pf-tab {
+      font-size: 13px;
+      padding: 7px 13px;
+    }
+    #pf-app .pf-grid {
+      grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+    }
+    #pf-app a.pf-tile {
+      font-size: 13px;
+      min-height: 90px;
+      padding: 12px 8px;
+    }
+    #pf-app .pf-heading {
+      font-size: 15px;
+    }
+    #pf-app input.pf-search {
+      width: 100%;
+      font-size: 13px;
+    }
+  }
+</style>
+
+<div id="pf-app">
+  <div class="pf-tabs"   id="pfTabs"></div>
+  <div class="pf-body">
+    <div class="pf-sidebar" id="pfSidebar"></div>
+    <div class="pf-main">
+      <div class="pf-bar">
+        <label class="pf-tgl-wrap">
+          <div class="pf-tgl">
+            <input type="checkbox" id="pfAll">
+            <span class="pf-track"></span>
+          </div>
+          <span id="pfToggleLbl">Show All Assess</span>
+        </label>
+        <div class="pf-heading" id="pfHd"></div>
+        <input type="search" class="pf-search" id="pfS" placeholder="Enter search term here…">
+      </div>
+      <div class="pf-grid" id="pfGrid"></div>
+      <div class="pf-count" id="pfCnt"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  EDIT YOUR DATA IN THIS SECTION                             ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+// Top tab buttons (departments) — edit labels or add/remove here
+var TABS = [
+  "Assess", "ER", "Majors", "Injuries",
+  "CED", "CSSU", "EDU", "AMU", "FRAIL", "ACB", "GPAU"
+];
+
+// Left sidebar sections — edit labels or add/remove here
+// (Nursing removed as not required)
+var SECTIONS = [
+  "ED Proformas",
+  "EDU Pathways",
+  "Requests & Letters",
+  "PILs",
+  "Other"
+];
+
+// Named colour palette — use a name below, or any hex code like "#ff6600"
+// ─────────────────────────────────────────────────────────────────────────
+// grey | green | dark-green | blue | dark-blue | navy | red | dark-red
+// orange | amber | pink | magenta | teal | cyan | purple | dark-purple
+// black | white | light-blue
+// coral | indigo | lime | sky | maroon | slate
+// ─────────────────────────────────────────────────────────────────────────
+var COLOURS = {
+  "grey":        "#6c757d",
+  "green":       "#43a047",
+  "dark-green":  "#2e7d32",
+  "blue":        "#1976d2",
+  "dark-blue":   "#1565c0",
+  "navy":        "#1a237e",
+  "red":         "#e53935",
+  "dark-red":    "#b71c1c",
+  "orange":      "#ef6c00",
+  "amber":       "#f9a825",
+  "pink":        "#e91e63",
+  "magenta":     "#d81b60",
+  "teal":        "#0097a7",
+  "cyan":        "#00acc1",
+  "purple":      "#7b1fa2",
+  "dark-purple": "#4a148c",
+  "black":       "#212121",
+  "white":       "#f5f5f5",
+  "light-blue":  "#4fc3f7",
+  "coral":       "#f4511e",
+  "indigo":      "#3949ab",
+  "lime":        "#7cb342",
+  "sky":         "#0288d1",
+  "maroon":      "#880e4f",
+  "slate":       "#546e7a"
+};
+
+// ── PROFORMAS LIST ─────────────────────────────────────────────
+//
+//  Each entry needs five fields:
+//    name     → text on the tile
+//    tab      → must exactly match one of the TABS above
+//    section  → must exactly match one of the SECTIONS above
+//    color    → a name from the palette, or any hex code
+//    url      → full PDF link (upload PDF in Squarespace Files,
+//               then right-click → Copy Link)
+//
+//  The sidebar only shows sections that have at least one
+//  proforma for the current tab — empty sections are hidden.
+//
+// ──────────────────────────────────────────────────────────────
+var PROFORMAS = [
+
+// ── ASSESS / ED Proformas ──────────────────────────────────────────────────────
+{ name: "Acute Aortic Syndrome (AAS)",                    tab: "Assess", section: "ED Proformas", color: "grey",        url: "https://em3learn.github.io/proformas/acute-aortic-syndrome-uhl-emergency-department-guideline.pdf" },
+{ name: "Asthma in Adults",                               tab: "Assess", section: "ED Proformas", color: "green",       url: "https://em3learn.github.io/proformas/asthma-uhl-emergency-department-guideline.pdf" },
+{ name: "Blood Borne Virus Exposure (Affecting Worker)",  tab: "Assess", section: "ED Proformas", color: "pink",        url: "https://em3learn.github.io/proformas/bbv-occupational-exposure-management-ed-proforma.pdf" },
+{ name: "Bradycardia",                                    tab: "Assess", section: "ED Proformas", color: "navy",        url: "https://em3learn.github.io/proformas/bradycardia-uhl-emergency-department-guideline.pdf" },
+{ name: "Cauda Equina Syndrome",                          tab: "Assess", section: "ED Proformas", color: "dark-green",  url: "https://em3learn.github.io/proformas/cauda-equina-syndrome-ces-rule-in-out-uhl-emergency-department-guideline.pdf" },
+{ name: "Cellulitis in Adults",                           tab: "Assess", section: "ED Proformas", color: "green",       url: "https://em3learn.github.io/proformas/cellulitis-uhl-emergency-department-guideline.pdf" },
+{ name: "Cervical Spine Injury",                          tab: "Assess", section: "ED Proformas", color: "orange",      url: "https://em3learn.github.io/proformas/cervical-spine-injury-uhl-emergency-department-guideline.pdf" },
+{ name: "DVT of the Leg",                                 tab: "Assess", section: "ED Proformas", color: "red",         url: "https://em3learn.github.io/proformas/dvt-deep-vein-thrombosis-of-the-leg-uhl-emergency-department-guideline.pdf" },
+{ name: "Flank Pain",                                     tab: "Assess", section: "ED Proformas", color: "dark-blue",   url: "https://em3learn.github.io/proformas/flank-pain-in-adults-uhl-emergency-department-guideline.pdf" },
+{ name: "Headache (Section 1; includes SAH rule-out)",    tab: "Assess", section: "ED Proformas", color: "dark-green",  url: "https://em3learn.github.io/proformas/headache-uhl-emergency-department-guideline.pdf" },
+{ name: "Headache (Section 2)",                           tab: "Assess", section: "ED Proformas", color: "green",       url: "https://em3learn.github.io/proformas/headache-part-2-uhl-emergency-department-guideline.pdf" },
+{ name: "Hip Injury",                                     tab: "Assess", section: "ED Proformas", color: "magenta",     url: "https://em3learn.github.io/proformas/hip-fracture-uhl-emergency-department-guideline.pdf" },
+{ name: "HIV PEPSE",                                      tab: "Assess", section: "ED Proformas", color: "cyan",        url: "https://em3learn.github.io/proformas/hiv-post-exposure-prophylaxis-after-sexual-exposure-pepse-uhl-emergency-department-guideline.pdf" },
+{ name: "Hyperkalaemia",                                  tab: "Assess", section: "ED Proformas", color: "black",       url: "https://em3learn.github.io/proformas/hyperkalaemia-in-adults-esm-proforma.pdf" },
+{ name: "Hyperkalaemia (Referred by GP)",                 tab: "Assess", section: "ED Proformas", color: "amber",       url: "https://em3learn.github.io/proformas/hyperkalaemia-referred-to-the-ed-uhl-emergency-department-guideline.pdf" },
+{ name: "Maternity Major Trauma or Critical Illness",     tab: "Assess", section: "ED Proformas", color: "magenta",     url: "https://em3learn.github.io/proformas/maternity-major-trauma-or-critical-illness.pdf" },
+{ name: "Non-Invasive Ventilation (NIV)",                 tab: "Assess", section: "ED Proformas", color: "navy",        url: "https://em3learn.github.io/proformas/non-invasive-ventilation-uhl-emergency-department-guideline.pdf" },
+{ name: "NSTEMI Diagnosis & Early Management",            tab: "Assess", section: "ED Proformas", color: "dark-green",  url: "https://em3learn.github.io/proformas/nstemi-diagnosis-and-early-management-uhl-emergency-department-guideline.pdf" },
+{ name: "Paracetamol Poisoning in Adults",                tab: "Assess", section: "ED Proformas", color: "blue",        url: "https://em3learn.github.io/proformas/paracetamol-overdose-uhl-emergency-department-guideline.pdf" },
+{ name: "Penthrox Inhaled Analgesia (Adults)",            tab: "Assess", section: "ED Proformas", color: "purple",      url: "https://em3learn.github.io/proformas/penthrox-inhaled-analgesia-for-adults.pdf" },
+{ name: "Postpartum Haemorrhage",                         tab: "Assess", section: "ED Proformas", color: "dark-red",    url: "https://em3learn.github.io/proformas/postpartum-haemorrhage-pph.pdf" },
+{ name: "Sepsis in Adults",                               tab: "Assess", section: "ED Proformas", color: "green",       url: "https://em3learn.github.io/proformas/sepsis-adult-proforma.pdf" },
+{ name: "Sexual Assault",                                 tab: "Assess", section: "ED Proformas", color: "white",       url: "https://em3learn.github.io/proformas/adult-sexual-assault-uhl-emergency-department-guideline.pdf" },
+{ name: "Shoulder Dislocation",                           tab: "Assess", section: "ED Proformas", color: "teal",        url: "https://em3learn.github.io/proformas/the-guideline-for-lri-emergency-department-management-of-glenohumeral-joint-dislocations-shoulder-dislocation-uhl-emergency-department-guideline.pdf" },
+{ name: "Suspected Stroke / TIA",                         tab: "Assess", section: "ED Proformas", color: "dark-blue",   url: "https://em3learn.github.io/proformas/suspected-stroke-or-tia-and-confirmed-intracerebral-bleed-uhl-emergency-department-guideline.pdf" },
+{ name: "Upper GI Bleeding",                              tab: "Assess", section: "ED Proformas", color: "dark-red",    url: "https://em3learn.github.io/proformas/upper-gi-bleeding-uhl-emergency-department-guideline.pdf" },
+
+// ── ASSESS / EDU Pathways ──────────────────────────────────────────────────────
+  { name: "Acute Urinary Retention In Men", tab: "Assess", section: "EDU Pathways", color: "orange", url: "https://em3learn.github.io/proformas/assess-pathways/acute-urinary-retention-in-men-edu-pathway.pdf" },
+  { name: "Alcohol", tab: "Assess", section: "EDU Pathways", color: "light-blue", url: "https://em3learn.github.io/proformas/assess-pathways/alcohol-edu-pathway.pdf" },
+  { name: "Anaphylaxis", tab: "Assess", section: "EDU Pathways", color: "blue", url: "https://em3learn.github.io/proformas/assess-pathways/anaphylaxis-edu-pathway.pdf" },
+  { name: "Awaiting Results", tab: "Assess", section: "EDU Pathways", color: "light-blue", url: "https://em3learn.github.io/proformas/assess-pathways/awaiting-results-edu-pathway.pdf" },
+  { name: "Cellulitis", tab: "Assess", section: "EDU Pathways", color: "green", url: "https://em3learn.github.io/proformas/assess-pathways/cellulitis-edu-pathway.pdf" },
+  { name: "ED Consultants-Only", tab: "Assess", section: "EDU Pathways", color: "red", url: "https://em3learn.github.io/proformas/assess-pathways/ed-consultants-only-edu-pathway.pdf" },
+  { name: "Epic Only", tab: "Assess", section: "EDU Pathways", color: "purple", url: "https://em3learn.github.io/proformas/assess-pathways/epic-only-edu-pathway.pdf" },
+  { name: "Flank Pain", tab: "Assess", section: "EDU Pathways", color: "blue", url: "https://em3learn.github.io/proformas/assess-pathways/flank-pain-edu-pathway.pdf" },
+  { name: "Hypoglycaemia", tab: "Assess", section: "EDU Pathways", color: "orange", url: "https://em3learn.github.io/proformas/assess-pathways/hypoglycaemia-edu-pathway.pdf" },
+  { name: "Last Hours Of Life", tab: "Assess", section: "EDU Pathways", color: "dark-green", url: "https://em3learn.github.io/proformas/assess-pathways/last-hours-of-life-edu-pathway.pdf" },
+  { name: "Mental Health", tab: "Assess", section: "EDU Pathways", color: "brown", url: "https://em3learn.github.io/proformas/assess-pathways/mental-health-edu-pathway.pdf" },
+  { name: "NAC Treatment", tab: "Assess", section: "EDU Pathways", color: "light-blue", url: "https://em3learn.github.io/proformas/assess-pathways/nac-treatment-edu-pathway.pdf" },
+  { name: "Toxicology", tab: "Assess", section: "EDU Pathways", color: "cyan", url: "https://em3learn.github.io/proformas/assess-pathways/toxicology-edu-pathway.pdf" },
+  
+  // ── ASSESS / Requests & Letters ──────────────────────────────────────────────────────
+  { name: "Discharge Letter (IT Downtime)", tab: "Assess", section: "Requests & Letters", color: "blue", url: "https://em3learn.github.io/proformas/assess-requests/discharge-letter-ed-it-downtime.pdf" },
+  { name: "Headed UHL Paper", tab: "Assess", section: "Requests & Letters", color: "magenta", url: "https://em3learn.github.io/proformas/assess-requests/headed-uhl-paper.pdf" },
+  { name: "Imaging Referral Form", tab: "Assess", section: "Requests & Letters", color: "magenta", url: "https://em3learn.github.io/proformas/assess-requests/imaging-referral-form.pdf" },
+  { name: "Measles Notification Form", tab: "Assess", section: "Requests & Letters", color: "magenta", url: "https://em3learn.github.io/proformas/assess-requests/measles-notification-form-adult-ed.pdf" },
+  { name: "Physiotherapy Self Referral Form", tab: "Assess", section: "Requests & Letters", color: "green", url: "https://em3learn.github.io/proformas/assess-requests/physiotherapy-self-referral-form.pdf" },
+  { name: "Sharing Information About Patients In Police Custody Discharge Letter", tab: "Assess", section: "Requests & Letters", color: "green", url: "https://em3learn.github.io/proformas/assess-requests/sharing-information-about-patients-in-police-custody-discharge-letter.pdf" },
+
+  // ── ASSESS / PILs ────────────────────────────────────────────
+
+ { name: "14mg Nicotine Patch", tab: "Assess", section: "PILs", color: "grey", url: "https://em3learn.github.io/proformas/assess-pils/14mg-nicotine-patch.pdf" },
+  { name: "15mg Nicotine Patch", tab: "Assess", section: "PILs", color: "grey", url: "https://em3learn.github.io/proformas/assess-pils/15mg-nicotine-patch.pdf" },
+  { name: "21mg Nicotine Patch", tab: "Assess", section: "PILs", color: "grey", url: "https://em3learn.github.io/proformas/assess-pils/21mg-nicotine-patch.pdf" },
+  { name: "25mg Nicotine Patch", tab: "Assess", section: "PILs", color: "grey", url: "https://em3learn.github.io/proformas/assess-pils/25mg-nicotine-patch.pdf" },
+  { name: "PALS", tab: "Assess", section: "PILs", color: "light-blue", url: "https://em3learn.github.io/proformas/assess-pils/PALS.pdf" },
+  { name: "Safeguarding Adults", tab: "Assess", section: "PILs", color: "dark-blue", url: "https://em3learn.github.io/proformas/assess-pils/Safeguarding-Adults.pdf" },
+  { name: "Stop Smoking", tab: "Assess", section: "PILs", color: "grey", url: "https://em3learn.github.io/proformas/assess-pils/Stop-smoking.pdf" },
+  { name: "TrustMed Pharmacy", tab: "Assess", section: "PILs", color: "green", url: "https://em3learn.github.io/proformas/assess-pils/TrustMed-Pharmacy.pdf" },
+  { name: "Access To Your Health Records", tab: "Assess", section: "PILs", color: "blue", url: "https://em3learn.github.io/proformas/assess-pils/access-to-your-health-records.pdf" },
+  { name: "Advice And Support If You Are Drinking Too Much Alcohol", tab: "Assess", section: "PILs", color: "orange", url: "https://em3learn.github.io/proformas/assess-pils/advice-and-support-if-you-are-drinking-too-much-alcohol.pdf" },
+  { name: "Alcohol Advice - Gujarati", tab: "Assess", section: "PILs", color: "orange", url: "https://em3learn.github.io/proformas/assess-pils/alcohol-advice-gujarati.pdf" },
+  { name: "Bleeding In Early Pregnancy", tab: "Assess", section: "PILs", color: "magenta", url: "https://em3learn.github.io/proformas/assess-pils/bleeding-in-early-pregnancy.pdf" },
+  { name: "Care After A Minor Head Injury", tab: "Assess", section: "PILs", color: "red", url: "https://em3learn.github.io/proformas/assess-pils/care-after-a-minor-head-injury.pdf" },
+  { name: "Care After Swallowing A Button Battery", tab: "Assess", section: "PILs", color: "red", url: "https://em3learn.github.io/proformas/assess-pils/care-after-swallowing-a-button-battery.pdf" },
+  { name: "Covid-19", tab: "Assess", section: "PILs", color: "green", url: "https://em3learn.github.io/proformas/assess-pils/covid-19-pil.pdf" },
+  { name: "Five Ways To Wellbeing", tab: "Assess", section: "PILs", color: "magenta", url: "https://em3learn.github.io/proformas/assess-pils/five-ways-to-wellbeing.pdf" },
+  { name: "Hyperkalaemia Self Care In CKD", tab: "Assess", section: "PILs", color: "magenta", url: "https://em3learn.github.io/proformas/assess-pils/hyperkalaemia-self-care-in-ckd.pdf" },
+  { name: "Injuries Night Closure", tab: "Assess", section: "PILs", color: "black", url: "https://em3learn.github.io/proformas/assess-pils/injuries-night-closure.pdf" },
+  { name: "Mental Health Support", tab: "Assess", section: "PILs", color: "light-blue", url: "https://em3learn.github.io/proformas/assess-pils/mental-health-support.pdf" },
+  { name: "Monitoring Your Asthma After A Flare Up", tab: "Assess", section: "PILs", color: "blue", url: "https://em3learn.github.io/proformas/assess-pils/monitoring-your-asthma-after-a-flare-up.pdf" },
+  { name: "Neck Pain", tab: "Assess", section: "PILs", color: "red", url: "https://em3learn.github.io/proformas/assess-pils/neck-pain.pdf" },
+  { name: "Nicotine Inhaler", tab: "Assess", section: "PILs", color: "grey", url: "https://em3learn.github.io/proformas/assess-pils/nicotine-inhaler.pdf" },
+  { name: "Nicotine Lozenges", tab: "Assess", section: "PILs", color: "grey", url: "https://em3learn.github.io/proformas/assess-pils/nicotine-lozenges.pdf" },
+  { name: "Paracetamol Overdose", tab: "Assess", section: "PILs", color: "red", url: "https://em3learn.github.io/proformas/assess-pils/paracetamol-overdose.pdf" },
+  { name: "Screening For Bloodborne Viruses", tab: "Assess-pils", section: "PILs", color: "red", url: "https://em3learn.github.io/proformas/assess-pils/screening-for-bloodborne-viruses.pdf" },
+  { name: "Suspected Measles", tab: "Assess", section: "PILs", color: "purple", url: "https://em3learn.github.io/proformas/assess-pils/suspected-measles.pdf" },
+  { name: "Understanding Delirium", tab: "Assess", section: "PILs", color: "green", url: "https://em3learn.github.io/proformas/assess-pils/understanding-delirium.pdf" },
+  { name: "Wellbeing In The ED", tab: "Assess", section: "PILs", color: "cyan", url: "https://em3learn.github.io/proformas/assess-pils/wellbeing-in-the-ED.pdf" },
+  
+  // ── ASSESS / Other ───────────────────────────────────────────
+  { name: "4AT Delirium Screening Tool", tab: "Assess", section: "Other", color: "slate", url: "https://em3learn.github.io/proformas/assess-other/4at-delirium-screening-tool.pdf" },
+  { name: "Acute Behavioural Disturbance In Adults ED", tab: "Assess", section: "Other", color: "red", url: "https://em3learn.github.io/proformas/assess-other/acute-behavioural-disturbance-in-adults-ed-proforma.pdf" },
+  { name: "Alcohol Withdrawal Management and GMAWS Chart", tab: "Assess", section: "Other", color: "sky", url: "https://em3learn.github.io/proformas/assess-other/alcohol-withdrawal-and-gmaws-uhl-proforma.pdf" },
+  { name: "Body Map ED Documentation Tool", tab: "Assess", section: "Other", color: "green", url: "https://em3learn.github.io/proformas/assess-other/body-map-ed-documentation-tool.pdf" },
+  { name: "Capacity Assessment In Adults", tab: "Assess", section: "Other", color: "green", url: "https://em3learn.github.io/proformas/assess-other/capacity-assessment-in-adults-ed-proforma.pdf" },
+  { name: "Chest Pain Low Risk GPAU Referral", tab: "Assess", section: "Other", color: "sky", url: "https://em3learn.github.io/proformas/assess-other/chest-pain-low-risk-gpau-referral-proforma.pdf" },
+  { name: "Covid-19 Sieve (Adults)", tab: "Assess", section: "Other", color: "sky", url: "https://em3learn.github.io/proformas/assess-other/covid-19-triage-proforma-adults.pdf" },
+  { name: "Opioid Withdrawal (COWS)Chart", tab: "Assess", section: "Other", color: "black", url: "https://em3learn.github.io/proformas/assess-other/cows-clinical-opioid-withdrawal-scale-chart.pdf" },
+  { name: "Domestic Abuse UHL Emergency Department Guideline", tab: "Assess", section: "Other", color: "red", url: "https://em3learn.github.io/proformas/assess-other/domestic-abuse-uhl-emergency-department-guideline.pdf" },
+  { name: "HAZMAT and CBRNe Pack", tab: "Assess", section: "Other", color: "coral", url: "https://em3learn.github.io/proformas/assess-other/ed-hazmat-and-cbrne-pack.pdf" },
+  { name: "Gentamicin Prescription Chart", tab: "Assess", section: "Other", color: "lime", url: "https://em3learn.github.io/proformas/assess-other/gentamycin-chart-adults.pdf" },
+  { name: "Illicit Substances Form", tab: "Assess", section: "Other", color: "coral", url: "https://em3learn.github.io/proformas/assess-other/illicit-substances-form.pdf" },
+  { name: "Injuries Streaming (Adult VAC)", tab: "Assess", section: "Other", color: "slate", url: "https://em3learn.github.io/proformas/assess-other/injuries-streaming-tool-for-adult-vac.pdf" },
+  { name: "Major Trauma CT Primary Survey Report Form", tab: "Assess", section: "sky", color: "green", url: "https://em3learn.github.io/proformas/assess-other/major-trauma-ct-primary-survey-report-form.pdf" },
+  { name: "Missing Person Flow Chart", tab: "Assess", section: "Other", color: "red", url: "https://em3learn.github.io/proformas/assess-other/missing-person-flow-chart.pdf" },
+  { name: "Nicotine Replacement Therapy", tab: "Assess", section: "Other", color: "grey", url: "https://em3learn.github.io/proformas/assess-other/nicotine-replacement-therapy-uhl-emergency-department-guideline.pdf" },
+  { name: "PEF Diary", tab: "Assess", section: "Other", color: "purple", url: "https://em3learn.github.io/proformas/assess-other/pef-diary.pdf" },
+  { name: "Police ED Handover Form", tab: "Assess", section: "Other", color: "red", url: "https://em3learn.github.io/proformas/assess-other/police-ed-handover-form.pdf" },
+  { name: "Section 136 Pack", tab: "Assess", section: "Other", color: "blue", url: "https://em3learn.github.io/proformas/assess-other/section-136-pack.pdf" },
+  { name: "Think Delirium Support Tool", tab: "Assess", section: "Other", color: "slate", url: "https://em3learn.github.io/proformas/assess-other/think-delirium-support-tool.pdf" },
+  { name: "Urgent Care Services Map", tab: "Assess", section: "Other", color: "orange", url: "https://em3learn.github.io/proformas/assess-other/urgent-care-services-map-llr.pdf" },
+  { name: "Vancomycin Chart", tab: "Assess", section: "Other", color: "teal", url: "https://em3learn.github.io/proformas/assess-other/vancomycin-chart-v1.6.pdf" },
+  { name: "Complaint (Verbal) - Record Form", tab: "Assess", section: "Other", color: "black", url: "https://em3learn.github.io/proformas/assess-other/verbal-complaints-record-form.pdf" },
+  { name: "VTE Risk Assessment for Patients Awaiting Bed", tab: "Assess", section: "Other", color: "red", url: "https://em3learn.github.io/proformas/assess-other/vte-risk-assessment-ed-tool-for-patients-awaiting-bed.pdf" },
+  { name: "Weapons Brought In By Patients", tab: "Assess", section: "Other", color: "maroon", url: "https://em3learn.github.io/proformas/assess-other/weapons-brought-in-by-patients-–-safety-management-uhl-emergency-department-guideline.pdf" },
+
+// ── ER / ED Proformas ──────────────────────────────────────────────────────
+{ name: "Acute Aortic Syndrome (AAS)",                    tab: "ER", section: "ED Proformas", color: "grey",        url: "https://em3learn.github.io/proformas/acute-aortic-syndrome-uhl-emergency-department-guideline.pdf" },
+{ name: "Asthma in Adults",                               tab: "ER", section: "ED Proformas", color: "green",       url: "https://em3learn.github.io/proformas/asthma-uhl-emergency-department-guideline.pdf" },
+{ name: "Bradycardia",                                    tab: "ER", section: "ED Proformas", color: "navy",        url: "https://em3learn.github.io/proformas/bradycardia-uhl-emergency-department-guideline.pdf" },
+{ name: "Cellulitis in Adults",                           tab: "ER", section: "ED Proformas", color: "green",       url: "https://em3learn.github.io/proformas/cellulitis-uhl-emergency-department-guideline.pdf" },
+{ name: "Cervical Spine Injury",                          tab: "ER", section: "ED Proformas", color: "orange",      url: "https://em3learn.github.io/proformas/cervical-spine-injury-uhl-emergency-department-guideline.pdf" },
+{ name: "Epileptic Status (Adults)",                      tab: "ER", section: "ED Proformas", color: "indigo",      url: "https://em3learn.github.io/proformas/epileptic-status-adults.pdf" },
+{ name: "Epileptic Status (Children)",                    tab: "ER", section: "ED Proformas", color: "indigo",      url: "https://em3learn.github.io/proformas/epileptic-status-children.pdf" },
+{ name: "Headache (Section 1; includes SAH rule-out)",    tab: "ER", section: "ED Proformas", color: "dark-green",  url: "https://em3learn.github.io/proformas/headache-uhl-emergency-department-guideline.pdf" },
+{ name: "Headache (Section 2)",                           tab: "ER", section: "ED Proformas", color: "green",       url: "https://em3learn.github.io/proformas/headache-part-2-uhl-emergency-department-guideline.pdf" },
+{ name: "Hyperkalaemia",                                  tab: "ER", section: "ED Proformas", color: "black",       url: "https://em3learn.github.io/proformas/hyperkalaemia-in-adults-esm-proforma.pdf" },
+{ name: "Maternity Major Trauma or Critical Illness",     tab: "ER", section: "ED Proformas", color: "magenta",     url: "https://em3learn.github.io/proformas/maternity-major-trauma-or-critical-illness.pdf" },
+{ name: "Non-Invasive Ventilation (NIV)",                 tab: "ER", section: "ED Proformas", color: "navy",        url: "https://em3learn.github.io/proformas/non-invasive-ventilation-uhl-emergency-department-guideline.pdf" },
+{ name: "NSTEMI Diagnosis & Early Management",            tab: "ER", section: "ED Proformas", color: "dark-green",  url: "https://em3learn.github.io/proformas/nstemi-diagnosis-and-early-management-uhl-emergency-department-guideline.pdf" },
+{ name: "Penthrox Inhaled Analgesia (Adults)",            tab: "ER", section: "ED Proformas", color: "purple",      url: "https://em3learn.github.io/proformas/penthrox-inhaled-analgesia-for-adults.pdf" },
+{ name: "Postpartum Haemorrhage",                         tab: "ER", section: "ED Proformas", color: "dark-red",    url: "https://em3learn.github.io/proformas/postpartum-haemorrhage-pph.pdf" },
+{ name: "Rib Fractures",                                  tab: "ER", section: "ED Proformas", color: "amber",      url: "https://em3learn.github.io/proformas/rib-fractures.pdf" },
+{ name: "Sepsis in Adults",                               tab: "ER", section: "ED Proformas", color: "green",       url: "https://em3learn.github.io/proformas/sepsis-adult-proforma.pdf" },
+{ name: "Sexual Assault",                                 tab: "ER", section: "ED Proformas", color: "white",       url: "https://em3learn.github.io/proformas/adult-sexual-assault-uhl-emergency-department-guideline.pdf" },
+{ name: "Shoulder Dislocation",                           tab: "ER", section: "ED Proformas", color: "teal",        url: "https://em3learn.github.io/proformas/the-guideline-for-lri-emergency-department-management-of-glenohumeral-joint-dislocations-shoulder-dislocation-uhl-emergency-department-guideline.pdf" },
+{ name: "Suspected Stroke / TIA",                         tab: "ER", section: "ED Proformas", color: "dark-blue",   url: "https://em3learn.github.io/proformas/suspected-stroke-or-tia-and-confirmed-intracerebral-bleed-uhl-emergency-department-guideline.pdf" },
+{ name: "Upper GI Bleeding",                              tab: "ER", section: "ED Proformas", color: "dark-red",    url: "https://em3learn.github.io/proformas/upper-gi-bleeding-uhl-emergency-department-guideline.pdf" },
+
+// ── ER / EDU Pathways ──────────────────────────────────────────────────────
+  { name: "Alcohol", tab: "ER", section: "EDU Pathways", color: "light-blue", url: "https://em3learn.github.io/proformas/assess-pathways/alcohol-edu-pathway.pdf" },
+  { name: "Anaphylaxis", tab: "ER", section: "EDU Pathways", color: "blue", url: "https://em3learn.github.io/proformas/assess-pathways/anaphylaxis-edu-pathway.pdf" },
+  { name: "ED Consultants-Only", tab: "ER", section: "EDU Pathways", color: "red", url: "https://em3learn.github.io/proformas/assess-pathways/ed-consultants-only-edu-pathway.pdf" },
+  { name: "Epic Only", tab: "ER", section: "EDU Pathways", color: "purple", url: "https://em3learn.github.io/proformas/assess-pathways/epic-only-edu-pathway.pdf" },
+  { name: "Head Injury", tab: "ER", section: "EDU Pathways", color: "purple", url: "https://em3learn.github.io/proformas/assess-pathways/head-injury.pdf" },
+  { name: "Hypoglycaemia", tab: "ER", section: "EDU Pathways", color: "orange", url: "https://em3learn.github.io/proformas/assess-pathways/hypoglycaemia-edu-pathway.pdf" },
+  { name: "Last Hours Of Life", tab: "ER", section: "EDU Pathways", color: "dark-green", url: "https://em3learn.github.io/proformas/assess-pathways/last-hours-of-life-edu-pathway.pdf" },
+  { name: "Mental Health", tab: "ER", section: "EDU Pathways", color: "brown", url: "https://em3learn.github.io/proformas/assess-pathways/mental-health-edu-pathway.pdf" },
+  { name: "Post-Trauma", tab: "ER", section: "EDU Pathways", color: "orange", url: "https://em3learn.github.io/proformas/assess-pathways/post-trauma.pdf" },
+  { name: "Rib Fracture", tab: "ER", section: "EDU Pathways", color: "blue", url: "https://em3learn.github.io/proformas/assess-pathways/rib-fracture.pdf" },
+  { name: "Toxicology", tab: "ER", section: "EDU Pathways", color: "cyan", url: "https://em3learn.github.io/proformas/assess-pathways/toxicology-edu-pathway.pdf" },
+
+// ── ER / Requests & Letters ──────────────────────────────────────────────────────
+
+  
+  
+  { name: "Discharge Letter (IT Downtime)", tab: "ER", section: "Requests & Letters", color: "blue", url: "https://em3learn.github.io/proformas/assess-requests/discharge-letter-ed-it-downtime.pdf" },
+  { name: "Sharing Information About Patients In Police Custody Discharge Letter", tab: "ER", section: "Requests & Letters", color: "green", url: "https://em3learn.github.io/proformas/assess-requests/sharing-information-about-patients-in-police-custody-discharge-letter.pdf" },
+
+
+
+
+  { name: "Imaging Referral Form", tab: "ER", section: "Requests & Letters", color: "magenta", url: "https://em3learn.github.io/proformas/assess-requests/imaging-referral-form.pdf" },
+  { name: "Headed UHL Paper", tab: "ER", section: "Requests & Letters", color: "magenta", url: "https://em3learn.github.io/proformas/assess-requests/headed-uhl-paper.pdf" },
+
+// ── ER / PILs ────────────────────────────────────────────
+
+ { name: "14mg Nicotine Patch", tab: "ER", section: "PILs", color: "grey", url: "https://em3learn.github.io/proformas/assess-pils/14mg-nicotine-patch.pdf" },
+  { name: "15mg Nicotine Patch", tab: "ER", section: "PILs", color: "grey", url: "https://em3learn.github.io/proformas/assess-pils/15mg-nicotine-patch.pdf" },
+  { name: "21mg Nicotine Patch", tab: "ER", section: "PILs", color: "grey", url: "https://em3learn.github.io/proformas/assess-pils/21mg-nicotine-patch.pdf" },
+  { name: "25mg Nicotine Patch", tab: "ER", section: "PILs", color: "grey", url: "https://em3learn.github.io/proformas/assess-pils/25mg-nicotine-patch.pdf" },
+  { name: "Patient Information and Liaison Service (PILS)", tab: "ER", section: "PILs", color: "light-blue", url: "https://em3learn.github.io/proformas/assess-pils/PALS.pdf" },
+  { name: "Safeguarding Adults", tab: "ER", section: "PILs", color: "dark-blue", url: "https://em3learn.github.io/proformas/assess-pils/Safeguarding-Adults.pdf" },
+  { name: "Stop Smoking", tab: "ER", section: "PILs", color: "grey", url: "https://em3learn.github.io/proformas/assess-pils/Stop-smoking.pdf" },
+  { name: "Access To Your Health Records", tab: "ER", section: "PILs", color: "blue", url: "https://em3learn.github.io/proformas/assess-pils/access-to-your-health-records.pdf" },
+  { name: "Alcohol Advice", tab: "ER", section: "PILs", color: "orange", url: "https://em3learn.github.io/proformas/assess-pils/advice-and-support-if-you-are-drinking-too-much-alcohol.pdf" },
+  { name: "Alcohol Advice - Gujarati", tab: "ER", section: "PILs", color: "orange", url: "https://em3learn.github.io/proformas/assess-pils/alcohol-advice-gujarati.pdf" },
+  { name: "Care After A Minor Head Injury", tab: "ER", section: "PILs", color: "red", url: "https://em3learn.github.io/proformas/assess-pils/care-after-a-minor-head-injury.pdf" },
+  { name: "Five Ways To Wellbeing", tab: "ER", section: "PILs", color: "magenta", url: "https://em3learn.github.io/proformas/assess-pils/five-ways-to-wellbeing.pdf" },
+  { name: "Mental Health Support", tab: "ER", section: "PILs", color: "light-blue", url: "https://em3learn.github.io/proformas/assess-pils/mental-health-support.pdf" },
+  { name: "Monitoring Your Asthma After A Flare Up", tab: "ER", section: "PILs", color: "blue", url: "https://em3learn.github.io/proformas/assess-pils/monitoring-your-asthma-after-a-flare-up.pdf" },
+  { name: "Neck Sprain", tab: "ER", section: "PILs", color: "red", url: "https://em3learn.github.io/proformas/assess-pils/neck-pain.pdf" },
+  { name: "Nicotine Inhaler", tab: "ER", section: "PILs", color: "grey", url: "https://em3learn.github.io/proformas/assess-pils/nicotine-inhaler.pdf" },
+  { name: "Nicotine Lozenges", tab: "ER", section: "PILs", color: "grey", url: "https://em3learn.github.io/proformas/assess-pils/nicotine-lozenges.pdf" },
+  { name: "Paracetamol Overdose", tab: "ER", section: "PILs", color: "red", url: "https://em3learn.github.io/proformas/assess-pils/paracetamol-overdose.pdf" },
+  { name: "Screening For Bloodborne Viruses", tab: "ER", section: "PILs", color: "red", url: "https://em3learn.github.io/proformas/assess-pils/screening-for-bloodborne-viruses.pdf" },
+  { name: "Suspected Measles", tab: "ER", section: "PILs", color: "purple", url: "https://em3learn.github.io/proformas/assess-pils/suspected-measles.pdf" },
+  { name: "Understanding Delirium", tab: "ER", section: "PILs", color: "green", url: "https://em3learn.github.io/proformas/assess-pils/understanding-delirium.pdf" },
+  
+  // ── MAJORS ───────────────────────────────────────────────────
+  // { name: "Example Majors proforma",                      tab: "Majors", section: "ED Proformas",       color: "red",         url: "#" },
+
+  // ── (continue for other tabs in the same format) ─────────────
+
+];
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  APP LOGIC — no need to edit below this line                ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+var activeTab     = TABS[0];
+var activeSection = SECTIONS[0];
+
+function resolveColour(c) {
+  return COLOURS[c] || c;
+}
+
+function isLight(hex) {
+  if (!hex || hex.length < 7) return false;
+  var r = parseInt(hex.slice(1, 3), 16),
+      g = parseInt(hex.slice(3, 5), 16),
+      b = parseInt(hex.slice(5, 7), 16);
+  return (r * 299 + g * 587 + b * 114) / 1000 > 155;
+}
+
+// Only show sidebar sections that have at least one proforma for the current tab
+function availableSections(tab) {
+  return SECTIONS.filter(function(s) {
+    return PROFORMAS.some(function(p) { return p.tab === tab && p.section === s; });
+  });
+}
+
+function render() {
+  var showAll = document.getElementById('pfAll').checked;
+  var q       = document.getElementById('pfS').value.toLowerCase().trim();
+
+  // Toggle label
+  document.getElementById('pfToggleLbl').textContent = 'Show All ' + activeTab;
+
+  // Top tabs
+  document.getElementById('pfTabs').innerHTML = TABS.map(function(t) {
+    return '<button class="pf-tab' + (t === activeTab ? ' pf-on' : '') +
+           '" onclick="setTab(\'' + t + '\')">' + t + '</button>';
+  }).join('');
+
+  // Sidebar
+  var secs = availableSections(activeTab);
+  document.getElementById('pfSidebar').innerHTML = secs.map(function(s) {
+    var esc = s.replace(/'/g, "\\'");
+    return '<button class="pf-sec' + (s === activeSection && !showAll ? ' pf-on' : '') +
+           '" onclick="setSec(\'' + esc + '\')">' + s + '</button>';
+  }).join('');
+
+  // Heading
+  document.getElementById('pfHd').textContent =
+    (showAll ? activeTab + ' — All proformas' : activeTab + ' — ' + activeSection) +
+    (q ? '  ·  "' + q + '"' : '');
+
+  // Filter
+  var items = PROFORMAS.filter(function(p) {
+    return p.tab === activeTab &&
+           (showAll || p.section === activeSection) &&
+           (!q || p.name.toLowerCase().indexOf(q) !== -1);
+  });
+
+  // Grid
+  var grid = document.getElementById('pfGrid');
+  if (items.length === 0) {
+    grid.innerHTML = '<div class="pf-empty">No proformas found' +
+      (q ? ' matching "' + q + '"' : '') + '.</div>';
+  } else {
+    grid.innerHTML = items.map(function(p) {
+      var hex   = resolveColour(p.color);
+      var light = isLight(hex);
+      var style = 'background:' + hex + (light ? ';border:1.5px solid #ccc' : '');
+      return '<a class="pf-tile' + (light ? ' pf-lt' : '') +
+             '" style="' + style + '" href="' + p.url +
+             '" target="_blank" rel="noopener noreferrer">' + p.name + '</a>';
+    }).join('');
+  }
+
+  document.getElementById('pfCnt').textContent =
+    items.length + ' proforma' + (items.length !== 1 ? 's' : '');
+}
+
+function setTab(tab) {
+  activeTab = tab;
+  var secs = availableSections(tab);
+  activeSection = secs.length ? secs[0] : SECTIONS[0];
+  document.getElementById('pfAll').checked = false;
+  render();
+}
+
+function setSec(sec) {
+  activeSection = sec;
+  document.getElementById('pfAll').checked = false;
+  render();
+}
+
+document.getElementById('pfS').addEventListener('input', render);
+document.getElementById('pfAll').addEventListener('change', render);
+
+render();
+</script>
